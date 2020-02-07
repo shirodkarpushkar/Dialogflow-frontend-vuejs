@@ -35,6 +35,7 @@
 
 <script>
 import axios from "axios";
+const serverUrl = process.env.VUE_APP_FUNCTIONS
 export default {
   name: "app",
   components: {},
@@ -42,7 +43,8 @@ export default {
     return {
       chatHistory: [],
       id: 0,
-      currQuery: ""
+      currQuery: "",
+     
     };
   },
   created() {
@@ -51,7 +53,7 @@ export default {
       languageCode: "en-us"
     };
     axios
-      .post("http://localhost:3000/askQuery", data)
+      .post(`${serverUrl}askQuery`, data)
       .then(res => {
         console.log("TCL: created -> res", res);
         let welcomeData = res.data[0].queryResult.fulfillmentText;
@@ -84,7 +86,7 @@ export default {
           };
           let response = await axios({
             method: "post",
-            url: "http://www.localhost:3000/askQuery",
+            url: `${serverUrl}askQuery`,
             data
           });
           let textData = response.data[0].queryResult.fulfillmentText;
